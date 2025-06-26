@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                    String    @id @default(cuid())
+  email                 String    @unique
+  password              String
+  username              String?
+  isVerified            Boolean   @default(false)
+  verificationToken     String?
+  verificationTokenExpiry    DateTime?
+  refreshToken          String?
+  passwordResetToken    String?
+  passwordResetTokenExpiry   DateTime?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  // Relationships
+  workouts              Workout[]
+  notifications         Notification[]
+
+  @@map("users")
+}
+
+model Workout {
+  id           String       @id @default(cuid())
+  userId       String
+  date         DateTime
+  exerciseType ExerciseType
+  duration     Int          // in minutes
+  calories     Int
+  
+  // Relationships
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("workouts")
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  content   String
+  createdAt DateTime         @default(now())
+  status    NotificationStatus @default(PENDING)
+
+  // Relationships
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}
+
+enum ExerciseType {
+  RUNNING
+  CYCLING
+  SWIMMING
+  WEIGHTLIFTING
+}
+
+enum NotificationType {
+  VERIFICATION
+  PASSWORD_RESET
+  WORKOUT_REMINDER
+}
+
+enum NotificationStatus {
+  PENDING
+  SENT
+}

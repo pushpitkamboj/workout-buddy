@@ -1,0 +1,19 @@
+{
+  "name": "packages",
+  "version": "0.0.0",
+  "description": "Fitness-Tracker2",
+  "author": "pushpit kamboj <pushpitkamboj@gmail.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "lib/packages.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "node ./__tests__/packages.test.js"
+  }
+}
