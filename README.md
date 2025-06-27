@@ -597,7 +597,7 @@ For support and questions:
 
 - **Create an Issue**: [GitHub Issues](https://github.com/your-username/fitness-tracker2/issues)
 - **Documentation**: Check this README and inline code comments
-- **Email**: support@fitness-tracker2.com
+- **Email**: pushpitkamboj@gmail.com
 
 ---
 
